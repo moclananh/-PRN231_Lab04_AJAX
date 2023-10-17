@@ -113,6 +113,7 @@
                 contentType: "application/json",
                 data: JSON.stringify(updatedProduct),
                 success: function (result, status, xhr) {
+                    window.location.href = "https://localhost:5002/Products";
                     ShowAllProducts();
                     $('#editModal').modal('hidden');
                     
