@@ -1,0 +1,66 @@
+﻿
+
+<div class="container-fluid">
+    <h2>Product List</h2>
+    <form id="createProductForm">
+        <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="productName" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="unitsInStock">Quantity:</label>
+            <input type="number" id="unitsInStock" name="unitsInStock" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="unitPrice">Unit Price:</label>
+            <input type="number" id="unitPrice" name="unitPrice" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="categoryId">CategoryId:</label>
+            <input type="number" id="categoryId" name="categoryId" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+      
+    </form>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Function to show all products (your existing function)
+
+        $("#createProductForm").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            var formData = {
+                productName: $("#productName").val(),
+                unitsInStock: $("#unitsInStock").val(),
+                unitPrice: $("#unitPrice").val(),
+                categoryId: $("#categoryId").val()
+            };
+
+            $.ajax({
+                url: "https://localhost:5001/api/Products",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function (result, status, xhr) {
+                    // Handle the success, e.g., add the new product to the table
+                    ShowAllProducts();
+                    // Clear the form fields
+                    $("#productName").val("");
+                    $("#unitsInStock").val("");
+                    $("#unitPrice").val("");
+                    $("#categoryId").val("");
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    alert("Error creating the product.");
+                }
+            });
+        });
+    });
+</script>
