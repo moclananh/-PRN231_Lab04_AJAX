@@ -163,6 +163,4 @@ D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAja
 D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAjaxClient\obj\Debug\net5.0\IdentityAjaxClient.genruntimeconfig.cache
 D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAjaxClient\obj\Debug\net5.0\ref\IdentityAjaxClient.dll
 D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAjaxClient\obj\Debug\net5.0\Razor\Views\Products\Create.cshtml.g.cs
-D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAjaxClient\obj\Debug\net5.0\Razor\Views\Products\Details.cshtml.g.cs
-D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAjaxClient\obj\Debug\net5.0\Razor\Views\Products\Edit.cshtml.g.cs
 D:\FU_Hub\FA23\PRN231\Lab\PRN231_Lab04_IdetityAjax ASP.NETCoreWebAPI\IdentityAjaxClient\obj\Debug\net5.0\Razor\Views\Products\Index.cshtml.g.cs

@@ -49,6 +49,7 @@
                 data: JSON.stringify(formData),
                 success: function (result, status, xhr) {
                     // Handle the success, e.g., add the new product to the table
+                    window.location.href = "https://localhost:5002/Products";
                     ShowAllProducts();
                     // Clear the form fields
                     $("#productName").val("");
