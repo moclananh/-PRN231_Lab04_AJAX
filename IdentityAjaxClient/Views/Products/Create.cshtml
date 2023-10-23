@@ -16,8 +16,8 @@
             <input type="number" id="unitPrice" name="unitPrice" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="categoryId">CategoryId:</label>
-            <input type="number" id="categoryId" name="categoryId" class="form-control" required>
+            <label for="categoryId">Category:</label>
+            <select id="categoryDropdown" class="form-control" required></select>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
       
@@ -29,8 +29,37 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
         // Function to show all products (your existing function)
+
+        // Function to load categories and populate the dropdown
+        function loadCategories() {
+            $.ajax({
+                url: "https://localhost:5001/api/Products/Category",
+                type: "get",
+                success: function (data) {
+                    var categoryDropdown = $("#categoryDropdown");
+
+                    // Clear existing options
+                    categoryDropdown.empty();
+
+                    // Populate the dropdown with category names and IDs
+                    data.forEach(function (category) {
+                        categoryDropdown.append(
+                            $("<option>")
+                                .val(category.categoryId)
+                                .text(category.categoryName)
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    alert("Error loading categories.");
+                }
+            });
+        }
+
+        // Load categories when the page loads
+        loadCategories();
 
         $("#createProductForm").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission behavior
@@ -39,7 +68,7 @@
                 productName: $("#productName").val(),
                 unitsInStock: $("#unitsInStock").val(),
                 unitPrice: $("#unitPrice").val(),
-                categoryId: $("#categoryId").val()
+                categoryId: $("#categoryDropdown").val() // Get the selected category ID
             };
 
             $.ajax({
@@ -55,7 +84,7 @@
                     $("#productName").val("");
                     $("#unitsInStock").val("");
                     $("#unitPrice").val("");
-                    $("#categoryId").val("");
+                    $("#categoryDropdown").val(""); // Reset category selection
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr);
@@ -64,4 +93,5 @@
             });
         });
     });
+
 </script>

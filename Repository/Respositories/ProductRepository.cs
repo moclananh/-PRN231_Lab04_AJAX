@@ -16,7 +16,10 @@ namespace Repositories.Respositories
             => ProductDAO.DeleteProduct(product);
 
         public List<Category> GetCategories()
-            => CategoryDAO.GetCategories();
+            => ProductDAO.GetCategories();
+
+        public Category GetCategoryById(int id)
+            => ProductDAO.GetCategoryById(id);
 
         public Product GetProductById(int id) 
             => ProductDAO.FindProductById(id);

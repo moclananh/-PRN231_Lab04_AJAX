@@ -40,13 +40,17 @@
                 dataType: "json",
                 success: function (result, status, xhr) {
                     $.each(result, function (index, value) {
+
+                        var categoryId = value["categoryId"];
+                        var categoryName = getCategoryName(categoryId);
+
                         $("tbody").append($("<tr>"));
                         appendElement = $("tbody tr").last();
                         appendElement.append($("<td>").html(value["productId"]));
                         appendElement.append($("<td>").html(value["productName"]));
                         appendElement.append($("<td>").html(value["unitsInStock"]));
                         appendElement.append($("<td>").html(value["unitPrice"]));
-                        appendElement.append($("<td>").html(value["categoryId"]));
+                        appendElement.append($("<td>").html(categoryName));
                         appendElement.append($("<td>").html("<button class='edit btn btn-primary' data-toggle='modal' data-target='#editModal'>Edit</button>"));
                         appendElement.append($("<td>").html("<a href=\"javascript:void(0);\" class=\"delete-link\" data-id=\"" + value["productId"] + "\">Delete</a>"));
                         $("tbody").append(appendElement);
@@ -58,6 +62,51 @@
             });
         }
 
+        //display all category
+        // Function to get category name based on categoryId
+        function getCategoryName(categoryId) {
+            var categoryName = "";
+            $.ajax({
+                async: false,
+                url: "https://localhost:5001/api/Products/Category/" + categoryId,
+                type: "get",
+                success: function (data) {
+                    categoryName = data.categoryName;
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+            return categoryName;
+        }
+
+        function loadCategories() {
+            $.ajax({
+                url: "https://localhost:5001/api/Products/Category",
+                type: "get",
+                success: function (data) {
+                    var categoryDropdown = $("#categoryDropdown");
+
+                    // Clear existing options
+                    categoryDropdown.empty();
+
+                    // Populate the dropdown with category names and IDs
+                    data.forEach(function (category) {
+                        categoryDropdown.append(
+                            $("<option>")
+                                .val(category.categoryId)
+                                .text(category.categoryName)
+                        );
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                    alert("Error loading categories.");
+                }
+            });
+        }
+
+        //delete
         $(document).on("click", ".delete-link", function () {
             var deleteLink = $(this); // Capture the reference to the clicked delete link
             var productId = deleteLink.data("id");
@@ -78,6 +127,7 @@
             }
         });
 
+        //edit
         $("table").on("click", "button.edit", function () {
             var row = $(this).closest("tr");
             var productId = row.find("td:nth-child(1)").text();
@@ -91,7 +141,7 @@
             $("#editModal").find("input[name='productName']").val(productName);
             $("#editModal").find("input[name='unitsInStock']").val(unitsInStock);
             $("#editModal").find("input[name='unitPrice']").val(unitPrice);
-            $("#editModal").find("input[name='categoryId']").val(categoryId);
+            $("#categoryDropdown").val(loadCategories); // Reset category selection
         });
 
         // Handle the edit form submission
@@ -103,7 +153,7 @@
                 productName: $(this).find("input[name='productName']").val(),
                 unitsInStock: $(this).find("input[name='unitsInStock']").val(),
                 unitPrice: $(this).find("input[name='unitPrice']").val(),
-                categoryId: $(this).find("input[name='categoryId']").val()
+                categoryId: $("#categoryDropdown").val()
             };
 
             // Send an AJAX request to update the product
@@ -116,13 +166,14 @@
                     window.location.href = "https://localhost:5002/Products";
                     ShowAllProducts();
                     $('#editModal').modal('hidden');
-                    
+
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr);
                 }
             });
         });
+
 
 
     });
@@ -155,8 +206,8 @@
                         <input type="text" name="unitPrice" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="categoryId">CategoryId</label>
-                        <input type="number" name="categoryId" class="form-control">
+                        <label for="categoryId">Category:</label>
+                        <select id="categoryDropdown" class="form-control" required></select>
                     </div>
                     <button type="submit" form="editForm" class="btn btn-primary">Save Changes</button>
                 </form>

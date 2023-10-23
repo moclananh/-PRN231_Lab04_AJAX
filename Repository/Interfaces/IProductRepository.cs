@@ -16,5 +16,6 @@ namespace Repositories.Interfaces
         void UpdateProduct(Product product);
         List<Category> GetCategories();
         List<Product> GetProducts();
+        Category GetCategoryById(int id);
     }
 }

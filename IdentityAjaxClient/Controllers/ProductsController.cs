@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityAjaxClient.Controllers
 {
-    /*[Authorize]*/
+    [Authorize]
     public class ProductsController : Controller
     {
         public ProductsController()

@@ -109,5 +109,22 @@ namespace DataAccess.DAOs
             }
             return listCat;
         }
+
+        public static Category GetCategoryById(int categoryId)
+        {
+            Category p = new Category();
+            try
+            {
+                using (var context = new ApplicationDBContext())
+                {
+                    p = context.Categories.SingleOrDefault(x => x.CategoryId == categoryId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return p;
+        }
     }
 }

@@ -45,6 +45,20 @@ namespace APIs.Controllers
             return product;
         }
 
+        // GET: api/Products/5
+        [HttpGet("Category/{id}")]
+        public ActionResult<Category> GetCategory(int id)
+        {
+            var cat = repository.GetCategoryById(id);
+
+            if (cat == null)
+            {
+                return NotFound();
+            }
+
+            return cat;
+        }
+
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
